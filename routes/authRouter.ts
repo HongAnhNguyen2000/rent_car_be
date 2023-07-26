@@ -1,9 +1,27 @@
-import express from 'express';
+import express, { Request } from 'express';
+import passport from 'passport';
+import session from "express-session";
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
-// router.post("/signup", authController.signup);
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile'] }));
 
-// router.post("/login", authController.login);
+router.get('google/callback', 
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+    });
+  
+router.get('/protected', (req: Request, res) => {
+    const name = req.user
+    res.send(`Hello, ${name}`)
+})
 
-export default router
+router.post("/register", authController.register);
+
+router.post("/login", authController.login);
+
+module.exports = router;
