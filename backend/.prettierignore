@@ -1,0 +1,6 @@
+/node_modules/
+/public/
+/build/
+/scripts/
+/src/serviceWorker.ts
+/src/assets/*

@@ -1,0 +1,11 @@
+FROM node:18.16.0-bullseye-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends python build-essential
+
+RUN mkdir /code
+
+WORKDIR /code
+
+ADD ./package.json /code/
+
+RUN yarn

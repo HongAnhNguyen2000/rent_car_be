@@ -1,0 +1,80 @@
+version: "2.1"
+
+networks:
+  shared_network:
+    external: true
+
+services:
+  rent_car_db:
+    container_name: rent_car_db
+    image: "mysql:8.0.32"
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      # - ./ext.sql:/docker-entrypoint-initdb.d/ext.sql
+      - ./db_backup/db.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./mysql.conf:/etc/mysql/conf.d
+      - ./dbdata:/var/lib/mysql/:delegated
+    networks:
+      - shared_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+  rent_car_backend:
+    container_name: rent_car_backend
+    build:
+      context: ../backend
+      dockerfile: ../docker/dockerfiles/backend
+    volumes:
+      - ../backend:/code:delegated
+      - /code/node_modules
+    networks:
+      - shared_network
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+
+      - PORT=${PORT}
+      - LISTEN_ADDRESS=${LISTEN_ADDRESS}
+      - TYPEORM_CONNECTION=${TYPEORM_CONNECTION}
+      - TYPEORM_HOST=${TYPEORM_HOST}
+      - TYPEORM_USERNAME=${TYPEORM_USERNAME}
+      - TYPEORM_PASSWORD=${TYPEORM_PASSWORD}
+      - TYPEORM_DATABASE=${TYPEORM_DATABASE}
+      - TYPEORM_PORT=${TYPEORM_PORT}
+      - TYPEORM_SYNCHRONIZE=${TYPEORM_SYNCHRONIZE}
+      - TYPEORM_LOGGING=${TYPEORM_LOGGING}
+      - TYPEORM_CACHE=${TYPEORM_CACHE}
+      - TYPEORM_ENTITIES=${TYPEORM_ENTITIES}
+      - TYPEORM_MIGRATIONS=${TYPEORM_MIGRATIONS}
+
+    depends_on:
+      rent_car_db:
+        condition: service_healthy
+    tty: ${DOCKER_TTY}
+    command: ${DOCKER_COMMAND}
+
+  rent_car_nginx:
+    container_name: rent_car_nginx
+    build:
+      context: ./
+      dockerfile: ./dockerfiles/nginx
+    restart: always
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d
+      - ${SSL_PATH}:/resource/ssl
+      - ../backend/public/:/resource/public
+    networks:
+      - shared_network
+    ports:
+      - "443:443"
+      - "80:80"
+    depends_on:
+      - rent_car_backend

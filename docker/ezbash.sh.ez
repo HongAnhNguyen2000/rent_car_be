@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker exec -it rent_car_backend bash
