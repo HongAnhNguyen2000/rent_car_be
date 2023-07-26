@@ -16,15 +16,19 @@ docker_up () {
 }
 
 help () {
-    echo "build             :  build docker instance"
-    echo "up                :  up docker instance"
-    echo "down              :  down docker inscance"
-    echo "restart           :  down then up docker instance"
-    echo "bserver           :  run phoenix dev server"
-    echo "btest             :  run test"
-    echo "fserver           :  run frontend dev server"
-    echo "yarn              :  run yarn"
-    echo "backend <args>    :  execute random command on backend service, ex: ./exec backend ls"
+    echo "build                   :  build docker instance"
+    echo "up                      :  up docker instance"
+    echo "down                    :  down docker inscance"
+    echo "restart                 :  down then up docker instance"
+    echo "bserver                 :  run phoenix dev server"
+    echo "btest                   :  run test"
+    echo "fserver                 :  run frontend dev server"
+    echo "yarn                    :  run yarn"
+    echo "backend <args>          :  execute random command on backend service, ex: ./exec backend ls"
+    echo "makemigrations <args>   :  makemigrations"
+    echo "seeder <args>           :  create seeder"
+    echo "seeder                  :  run seeder"
+    echo "migrate                 :  migrate"
 }
 
 if [ "$FIRST_ARG" == "-h" ]; then
@@ -55,9 +59,13 @@ elif [ "$FIRST_ARG" == "bbuild" ]; then
     rm -rf build
     docker compose exec "$NAME"_backend yarn build
 elif [ "$FIRST_ARG" == "makemigrations" ]; then
-    docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:create -n $ARGS -d migrations
+    docker compose exec "$NAME"_backend yarn run sequelize-cli migration:generate --name $ARGS
 elif [ "$FIRST_ARG" == "migrate" ]; then
-    docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:run
+    docker compose exec "$NAME"_backend yarn run sequelize-cli db:migrate
+elif [ "$FIRST_ARG" == "seeder" ]; then
+    docker compose exec "$NAME"_backend yarn run sequelize-cli seed:generate --name $ARGS
+elif [ "$FIRST_ARG" == "seederall" ]; then
+    docker compose exec "$NAME"_backend yarn run sequelize-cli db:seed:all
 elif [ "$FIRST_ARG" == "log" ]; then
     docker compose exec "$NAME"_backend tail -f storage/logs/laravel.log
 elif [ "$FIRST_ARG" == "up" ]; then
@@ -69,6 +77,7 @@ elif [ "$FIRST_ARG" == "restart" ]; then
     docker_up
 elif [ "$FIRST_ARG" == "build" ]; then
     docker compose build --no-cache
+    sequelize-cli init
 elif [ "$FIRST_ARG" == "pg_dump" ]; then
     docker compose exec "$NAME"_db pg_dump $ARGS
     # ./exec pg_dump -U username db_name > db.sql

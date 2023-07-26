@@ -1,0 +1,30 @@
+const path = require('path');
+// const glob = require('glob');
+
+// // Đường dẫn gốc của project
+// const rootPath = path.resolve(__dirname);
+
+// // Thư mục modules
+// const modulesDir = path.join(rootPath, 'src/modules');
+
+// // Tìm các thư mục bên trong modules
+// const moduleDirectories = glob
+//     .sync('*', { cwd: modulesDir, absolute: true })
+//     .filter((dir) => {
+//         return fs.lstatSync(dir).isDirectory();
+//     });
+
+// // Xây dựng đường dẫn cho migrations-path
+// const migrationsPaths = moduleDirectories.map((moduleDir) =>
+//     path.join(moduleDir, 'migrations')
+// );
+
+console.log(path.resolve('src', 'migrations'));
+console.log(path.resolve('src', 'models'));
+console.log(path.resolve('db.config.ts'));
+module.exports = {
+    config: path.resolve('db.config.ts'),
+    'migrations-path': path.resolve('src', 'migrations'),
+    'models-path': path.resolve('src', 'models'),
+    'seeders-path': path.resolve('src', 'seeders')
+};

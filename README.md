@@ -1,4 +1,22 @@
-# rent_car_be
+## For backend
 
-How to run project:
- npm run start:dev
+```
+cd docker
+cp .env.default .env
+cp nginx.conf/nginx.conf.local.default nginx.conf/nginx.conf
+./exec build
+./exec restart
+./exec bserver
+```
+
+## Configure domain
+
+```
+vim /etc/hosts
+```
+
+Append content
+
+```
+127.0.0.1       rent.car.test
+```

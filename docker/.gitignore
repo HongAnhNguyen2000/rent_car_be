@@ -1,4 +1,0 @@
-dbdata/
-nginx.conf/*.conf
-mysql.conf/*.cnf
-php.conf/*.ini
