@@ -5,6 +5,7 @@ cd docker
 cp .env.default .env
 cp nginx.conf/nginx.conf.local.default nginx.conf/nginx.conf
 ./exec build
+sequelize-cli init
 ./exec restart
 ./exec bserver
 ```
