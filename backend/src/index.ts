@@ -1,46 +1,52 @@
+import { createConnection } from 'typeorm';
 import express, { Express } from "express";
 import session from 'express-session';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import AppError from "./utils/appError";
-import { sequelize } from "./models";
+import { config } from "../db.config";
+import { carController } from './modules/car/controller';
+import { showroomController } from './modules/showroom/controller';
 
-const port = process.env.PORT || 50000;
+const port = process.env.PORT || 5001;
 const app: Express = express();
-const db = require('./models');
 
-const carRouter = require('./modules/car/car.route'); 
-
-app.use(helmet());
-app.use(express.json({ limit: "10kb" }));
-app.use(cookieParser());
-app.use(cors({
-  methods: ["POST", "GET", "PUT"],
-  credentials: true
-}))
-
-app.use(express.static(`${__dirname}/public`));
-app.use(
-    session({
-        secret: "My secret",
-        resave: false,
-        saveUninitialized: true,
-        cookie: {secure: false}
+async function main() {
+  await createConnection(config)
+    .then(async conn => {
+      await conn.runMigrations();
+      console.log("create connect success")
     })
-)
-// app.use(passport.initialize())
+    .catch(err => {
+      console.log("error create connect", err)
+    });
 
-app.use("/api/v1/car/", carRouter);
+  app.use(helmet());
+  app.use(express.json({ limit: "10kb" }));
+  app.use(cookieParser());
+  app.use(cors({
+    methods: ["POST", "GET", "PUT"],
+    credentials: true
+  }))
 
-app.listen({ port }, async () => {
-  await db.sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection to the database has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
+  app.use(express.json());
+  app.use(express.static(`${__dirname}/public`));
+  app.use(
+      session({
+          secret: "My secret",
+          resave: false,
+          saveUninitialized: true,
+          cookie: {secure: false}
+      })
+  );
+
+  app.use("/api/v1/car/", carController);
+  app.use("/api/v1/showroom/", showroomController);
+  
+  app.listen({ port }, async () => {
+    console.log(`Server up on http://localhost:${port}`);
   });
-  console.log(`Server up on http://localhost:${port}`)
-});
+}
+
+main();

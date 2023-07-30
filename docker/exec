@@ -59,9 +59,13 @@ elif [ "$FIRST_ARG" == "bbuild" ]; then
     rm -rf build
     docker compose exec "$NAME"_backend yarn build
 elif [ "$FIRST_ARG" == "makemigrations" ]; then
-    docker compose exec "$NAME"_backend yarn run sequelize-cli model:generate --name $ARGS
+    docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:generate -n $ARGS
 elif [ "$FIRST_ARG" == "migrate" ]; then
-    docker compose exec "$NAME"_backend yarn run sequelize-cli db:migrate
+    docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:run
+# elif [ "$FIRST_ARG" == "makemigrations" ]; then
+#     docker compose exec "$NAME"_backend yarn run sequelize-cli model:generate --name $ARGS
+# elif [ "$FIRST_ARG" == "migrate" ]; then
+#     docker compose exec "$NAME"_backend yarn run sequelize-cli db:migrate
 elif [ "$FIRST_ARG" == "seeder" ]; then
     docker compose exec "$NAME"_backend yarn run sequelize-cli seed:generate --name $ARGS
 elif [ "$FIRST_ARG" == "seederall" ]; then
