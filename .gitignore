@@ -17,3 +17,4 @@ docker/couchdata/
 docker/rabbitmqdata/
 docker/conf.d/nginx.conf
 docker/voip/*.pem
+docker/ssl/
