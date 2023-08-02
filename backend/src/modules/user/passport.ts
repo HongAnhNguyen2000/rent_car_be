@@ -7,9 +7,9 @@ const GoogleStrategy = Google.Strategy
 
 
 passport.use(new GoogleStrategy({
-  clientID: '1079948418371-plt3a2vo5vsbffl4ioaefov6h0thmv4p.apps.googleusercontent.com',
-  clientSecret: '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',
-  callbackURL: `https://rent.car.test/api/v1/user/google/callback`,
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.URL_ENDPOINT,
   passReqToCallback: true 
 },
 function(request: Request, accessToken: string, refreshToken: string, profile: GoogleProfile, done: Google.VerifyCallback) {

@@ -2,6 +2,7 @@ version: "2.1"
 
 networks:
   shared_network:
+    external: true
 
 services:
   rent_car_db:

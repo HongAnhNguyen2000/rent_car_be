@@ -15,8 +15,7 @@ const port = process.env.PORT || 5001;
 const app: Express = express();
 
 async function main() {
-  console.log(config);
-  await createConnection(config)
+  await dataSource.initialize()
     .then(async conn => {
       await conn.runMigrations();
       console.log("create connect success")
