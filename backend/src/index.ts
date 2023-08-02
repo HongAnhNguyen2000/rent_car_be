@@ -48,8 +48,8 @@ async function main() {
   app.use (passport.session());
 
   app.use("/api/v1/user", userController)
-  app.use("/api/v1/car/", carController);
-  app.use("/api/v1/showroom/", showroomController);
+  app.use("/api/v1/car", carController);
+  app.use("/api/v1/showroom", showroomController);
   app.use("/api/v1/brand", brandAgencyController);
 
   app.all("*", (req: Request, res: Response, next) => {
