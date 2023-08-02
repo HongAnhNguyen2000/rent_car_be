@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { Box, BoxProps } from '@material-ui/core';
 // import track from '../utils/analytics';
 
-// ----------------------------------------------------------------------
 
 interface PageProps extends BoxProps {
   children: ReactNode;

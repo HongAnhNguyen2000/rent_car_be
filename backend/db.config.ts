@@ -8,8 +8,8 @@ const config = {
   entities: ['src/entities/*.ts'],
   migrations: ['src/migrations/*.ts'],
   migrationsTableName: 'migrations',
-  synchronize: false,
-  // synchronize: true,
+  // synchronize: false,
+  synchronize: true,
   cli: {
     entitiesDir: "src/entities/*.ts",
     migrationsDir: "src/migrations/*.ts"

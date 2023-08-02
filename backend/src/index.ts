@@ -1,19 +1,20 @@
 import { createConnection } from 'typeorm';
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import session from 'express-session';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
-import AppError from "./utils/appError";
-import { config } from "../db.config";
 import { carController } from './modules/car/controller';
 import { showroomController } from './modules/showroom/controller';
+import { brandAgencyController } from './modules/brand/controller';
+import { dataSource } from './utils/dataSource';
+import AppError from './utils/appError';
 
 const port = process.env.PORT || 5001;
 const app: Express = express();
 
 async function main() {
-  await createConnection(config)
+  await dataSource.initialize()
     .then(async conn => {
       await conn.runMigrations();
       console.log("create connect success")
@@ -41,8 +42,13 @@ async function main() {
       })
   );
 
-  app.use("/api/v1/car/", carController);
-  app.use("/api/v1/showroom/", showroomController);
+  app.use("/api/v1/car", carController);
+  app.use("/api/v1/showroom", showroomController);
+  app.use("/api/v1/brand", brandAgencyController);
+
+  app.all("*", (req: Request, res: Response, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
   
   app.listen({ port }, async () => {
     console.log(`Server up on http://localhost:${port}`);

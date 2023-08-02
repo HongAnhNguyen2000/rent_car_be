@@ -1,9 +1,9 @@
-// import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/styles';
 // import { withStyles } from '@material-ui/styles';
-import { makeStyles } from '@material-ui/styles';
+// import { makeStyles } from '@material-ui/styles';
 
 
-const GlobalStyles = makeStyles((theme) => ({
+const GlobalStyles = withStyles((theme) => ({
   '@global': {
     '*': {
       margin: 0,
@@ -51,6 +51,6 @@ const GlobalStyles = makeStyles((theme) => ({
       filter: 'blur(0)'
     }
   }
-}))(() => null);
+}));
 
 export default GlobalStyles;

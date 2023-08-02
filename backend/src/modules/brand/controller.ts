@@ -1,13 +1,14 @@
 import express from "express";
-import { ShowroomRepository } from "./repository";
+import { BrandAgencyRepository } from "./repository";
+import AppError from "../../utils/appError";
 
 const router = express.Router();
-const showroomRepo = new ShowroomRepository()
+const brandRepo = new BrandAgencyRepository()
 
 router.get('', async (req, res) => {
   try {
-    const showrooms = await showroomRepo.query({});
-    res.status(200).json(showrooms);
+    const brands = await brandRepo.query({});
+    res.status(200).json(brands);
   } catch (error) {
     res.status(400).json({"message": error});
   }
@@ -16,8 +17,8 @@ router.get('', async (req, res) => {
 router.post('', async (req, res) => {
   try {
     const data = req.body;
-    const showroom = await showroomRepo.create(data);
-    res.status(200).json(showroom);
+    const brand = await brandRepo.create(data);
+    res.status(200).json(brand);
   } catch (error) {
     res.status(400).json({"message": error});
   }
@@ -26,8 +27,8 @@ router.post('', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    let showroom = await showroomRepo.findById(id);
-    res.status(200).json(showroom);
+    const brand = await brandRepo.findById(id);
+    res.status(200).json(brand);
   } catch (error) {
     res.status(400).json({"message": error});
   }
@@ -36,12 +37,13 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const data = req.body;
-    const showroom = await showroomRepo.update(id, data);
-    res.status(200).json(showroom);
+    let data = req.body;
+  
+    const brand = await brandRepo.update(id, data);
+    res.status(200).json(brand);
   } catch (error) {
     res.status(400).json({"message": error});
   }
 });
 
-export {router as showroomController};
+export {router as brandAgencyController};
