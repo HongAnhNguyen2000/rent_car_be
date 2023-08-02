@@ -41,14 +41,11 @@ fi
 if [ "$FIRST_ARG" == "backend" ] || [ "$FIRST_ARG" == "db" ]; then
     docker compose exec "$NAME"_"$FIRST_ARG" $ARGS
 elif [ "$FIRST_ARG" == "yarn" ]; then
-    docker compose exec "$NAME"_backend yarn $ARGS
+    docker compose exec "$NAME"_client yarn $ARGS
 elif [ "$FIRST_ARG" == "fserver" ]; then
-    cd ../frontend
-    echo "Copy .env.local.default -> .env"
-    cp .env.local.default .env
-    yarn start
+    docker compose exec "$NAME"_client yarn dev
 elif [ "$FIRST_ARG" == "fbuild" ]; then
-    cd ../frontend
+    cd ../client
     echo "Copy .env.$TARGET_ENV.default -> .env"
     cp ".env.$TARGET_ENV.default" .env
     yarn build
@@ -62,10 +59,6 @@ elif [ "$FIRST_ARG" == "makemigrations" ]; then
     docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:generate -n $ARGS
 elif [ "$FIRST_ARG" == "migrate" ]; then
     docker compose exec "$NAME"_backend yarn ts-node node_modules/typeorm/cli.js migration:run
-# elif [ "$FIRST_ARG" == "makemigrations" ]; then
-#     docker compose exec "$NAME"_backend yarn run sequelize-cli model:generate --name $ARGS
-# elif [ "$FIRST_ARG" == "migrate" ]; then
-#     docker compose exec "$NAME"_backend yarn run sequelize-cli db:migrate
 elif [ "$FIRST_ARG" == "seeder" ]; then
     docker compose exec "$NAME"_backend yarn run sequelize-cli seed:generate --name $ARGS
 elif [ "$FIRST_ARG" == "seederall" ]; then

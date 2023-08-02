@@ -58,9 +58,9 @@ export class Car {
   @Column({ length: 100, nullable: false })
   description: string;
 
-  @Column({ type: 'timestamp', nullable: false })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', nullable: false })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
 }
