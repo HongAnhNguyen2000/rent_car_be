@@ -43,6 +43,7 @@ services:
 
       - PORT=${PORT}
       - LISTEN_ADDRESS=${LISTEN_ADDRESS}
+
       - DB_CONNECTION=${DB_CONNECTION}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
