@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { getConnection } from 'typeorm';
 import { User } from '../../entities/user';
 import { Profile } from "../../entities/profile";
+import { dataSource } from '../../utils/dataSource';
 
 // exports.verifyUser = async (req: Request, res: Response, next: NextFunction) => {
 //     const token = req.cookies.token;
@@ -33,7 +33,7 @@ exports.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const hash = await bcrypt.hash(req.body.password.toString(), saltRounds);
 
-      const userRepository = getConnection().getRepository(User);
+      const userRepository = dataSource.getRepository(User);
       const user = await userRepository.findOne({
         where: { email: req.body.email },
       });
@@ -60,7 +60,7 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
         return res.status(400).json({ Error: "Password || Email is required" });
     }
   try {
-    const userRepository = getConnection().getRepository(User);
+    const userRepository = dataSource.getRepository(User);
      const user = await userRepository.findOne({
       where: { email },
      });
@@ -73,7 +73,7 @@ exports.login = async (req: Request, res: Response, next: NextFunction) => {
     if (isPasswordMatch) {
       const email = user.email;
       const userId = user.id;
-       const profileRepository = getConnection().getRepository(Profile);
+       const profileRepository = dataSource.getRepository(Profile);
        const profileUser = await profileRepository.find({
         where: { user: { id: userId }},
         });
