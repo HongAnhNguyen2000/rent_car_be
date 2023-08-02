@@ -59,6 +59,18 @@ services:
     tty: ${DOCKER_TTY}
     command: ${DOCKER_COMMAND}
 
+  rent_car_client:
+    container_name: rent_car_client 
+    build:
+      context: ../client
+      dockerfile: ../docker/dockerfiles/client
+    volumes:
+      - ../client:/code:delegated
+      - /code/node_modules
+    tty: ${DOCKER_TTY}
+    networks:
+      - shared_network
+
   rent_car_nginx:
     container_name: rent_car_nginx
     build:
