@@ -3,7 +3,7 @@ version: "2.1"
 networks:
   shared_network:
     external: true
-
+    
 services:
   rent_car_db:
     container_name: rent_car_db
@@ -52,6 +52,8 @@ services:
       - DB_SYNCHRONIZE=${DB_SYNCHRONIZE}
       - DB_LOGGING=${DB_LOGGING}
       - DB_CACHE=${DB_CACHE}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID} 
+      - GOOGLE_CLIENT_SECRET={GOOGLE_CLIENT_SECRET}
 
     depends_on:
       rent_car_db:
