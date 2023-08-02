@@ -4,28 +4,26 @@ import session from 'express-session';
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
+import passport from "./modules/user/passport";
+import { userController } from './modules/user/controller';
 import { carController } from './modules/car/controller';
 import { showroomController } from './modules/showroom/controller';
-import { userController } from './modules/user/controller';
-import passport from "./modules/user/passport";
-
 import { brandAgencyController } from './modules/brand/controller';
 import { dataSource } from './utils/dataSource';
 import AppError from './utils/appError';
-
 
 const port = process.env.PORT || 5001;
 const app: Express = express();
 
 async function main() {
   await dataSource.initialize()
-    .then(async conn => {
-      await conn.runMigrations();
-      console.log("create connect success")
-    })
-    .catch(err => {
-      console.log("error create connect", err)
-    });
+  .then(async conn => {
+    await conn.runMigrations();
+    console.log("create connect success")
+  })
+  .catch(err => {
+    console.log("error create connect", err)
+  });
 
   app.use(helmet());
   app.use(express.json({ limit: "10kb" }));
@@ -45,13 +43,13 @@ async function main() {
           cookie: {secure: false}
       })
   );
+
   app.use (passport.initialize());
   app.use (passport.session());
 
-
+  app.use("/api/v1/user", userController)
   app.use("/api/v1/car/", carController);
   app.use("/api/v1/showroom/", showroomController);
-  app.use("/api/v1/user", userController)
   app.use("/api/v1/brand", brandAgencyController);
 
   app.all("*", (req: Request, res: Response, next) => {

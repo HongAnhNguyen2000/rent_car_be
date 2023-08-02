@@ -35,6 +35,4 @@ export class Profile {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
-    
-
 }
