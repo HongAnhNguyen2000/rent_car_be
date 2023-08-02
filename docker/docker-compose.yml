@@ -43,6 +43,7 @@ services:
 
       - PORT=${PORT}
       - LISTEN_ADDRESS=${LISTEN_ADDRESS}
+
       - DB_CONNECTION=${DB_CONNECTION}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
@@ -53,6 +54,9 @@ services:
       - DB_LOGGING=${DB_LOGGING}
       - DB_CACHE=${DB_CACHE}
 
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
     depends_on:
       rent_car_db:
         condition: service_healthy
