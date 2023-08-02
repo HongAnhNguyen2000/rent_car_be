@@ -8,11 +8,14 @@ import AppError from "./utils/appError";
 import { config } from "../db.config";
 import { carController } from './modules/car/controller';
 import { showroomController } from './modules/showroom/controller';
+import { userController } from './modules/user/controller';
+import passport from "./modules/user/passport";
 
 const port = process.env.PORT || 5001;
 const app: Express = express();
 
 async function main() {
+  console.log(config);
   await createConnection(config)
     .then(async conn => {
       await conn.runMigrations();
@@ -40,9 +43,12 @@ async function main() {
           cookie: {secure: false}
       })
   );
+  app.use (passport.initialize());
+  app.use (passport.session());
 
   app.use("/api/v1/car/", carController);
   app.use("/api/v1/showroom/", showroomController);
+  app.use("/api/v1/user", userController)
   
   app.listen({ port }, async () => {
     console.log(`Server up on http://localhost:${port}`);

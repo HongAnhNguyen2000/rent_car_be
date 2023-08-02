@@ -12,7 +12,7 @@ export class User {
   password: string;
 
   @Column({ length: 100, nullable: true })
-  signature: string;
+  token: string;
 
   @Column({ type: 'timestamp', nullable: true })
   lastLogin: Date;
