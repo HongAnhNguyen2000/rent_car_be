@@ -11,14 +11,13 @@ router.get('', (req, res) => {
 router.post("/register", userService.register);
 router.post("/login", userService.login);
 router.get('/login-google', (req, res) => {
-  
-    res.send("<a href='/api/v1/user/google'>Login with Google</a>")
+  res.send("<a href='/api/v1/user/google'>Login with Google</a>")
 })
 router.get('/google',  passport.authenticate('google', {
     scope: ['email', 'profile'],
-  }));
+}));
 
-  router.get (
+router.get (
   '/google/callback',
   passport.authenticate ('google', {
     successRedirect: '/api/v1/user/google/protected',

@@ -57,6 +57,7 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - GOOGLE_CALLBACK_URL=${GOOGLE_CALLBACK_URL}
+      - OAUTH_USER_PASSWORD=${OAUTH_USER_PASSWORD}
     depends_on:
       rent_car_db:
         condition: service_healthy
