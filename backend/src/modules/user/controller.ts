@@ -8,34 +8,28 @@ router.get('', (req, res) => {
   res.send("list user")
 });
 
-
-// router.get('google/callback', 
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//     });
-  
-// router.get('/protected', (req: Request, res: Response) => {
-//     const name = req.user
-//     res.send(`Hello, ${name}`)
-// })
-
-const noCache = (req: any,res: any,next: any) => {
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-  res.header('Expires', '-1');
-  res.header('Pragma', 'no-cache');
-  next()
-}
-
 router.post("/register", userService.register);
 router.post("/login", userService.login);
 router.get('/login-google', (req, res) => {
   
-    res.send("<a href='/google'>Login with Google</a>")
+    res.send("<a href='/api/v1/user/google'>Login with Google</a>")
 })
-router.get('/google', noCache,
-  passport.authenticate('google', { scope: ['email'] })
-)
+router.get('/google',  passport.authenticate('google', {
+    scope: ['email', 'profile'],
+  }));
+
+  router.get (
+  '/google/callback',
+  passport.authenticate ('google', {
+    successRedirect: '/api/v1/user/google/protected',
+    failureRedirect: '/api/v1/user/google/failure',
+  })
+);
+
+router.get('/google/failure', (req, res) => {
+  res.send ('Something went wrong!');
+});
+
+router.get('/google/protected', userService.oauthLogin);
 
 export {router as userController};
