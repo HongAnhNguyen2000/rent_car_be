@@ -129,7 +129,7 @@ router.delete('/image/:carImgId', async (req, res) => {
 });
 
 
-router.get('/admin', async (req, res) => {
+router.get('/admin/all', async (req, res) => {
   try {
     const cars = await carRepo.getAllForAdmin();
     const result = {
