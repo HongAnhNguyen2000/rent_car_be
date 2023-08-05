@@ -1,13 +1,14 @@
 import express from "express";
-import { BrandAgencyRepository } from "./repository";
+import { AddonRepository } from "./repository";
+import AppError from "../../utils/appError";
 
 const router = express.Router();
-const brandRepo = new BrandAgencyRepository()
+const addonRepo = new AddonRepository()
 
 router.get('', async (req, res) => {
   try {
-    const brands = await brandRepo.query({});
-    return res.status(200).json(brands);
+    const addons = await addonRepo.query({});
+    return res.status(200).json(addons);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -16,8 +17,8 @@ router.get('', async (req, res) => {
 router.post('', async (req, res) => {
   try {
     const data = req.body;
-    const brand = await brandRepo.create(data);
-    return res.status(200).json(brand);
+    const addon = await addonRepo.create(data);
+    return res.status(200).json(addon);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -26,11 +27,11 @@ router.post('', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const brand = await brandRepo.findById(id);
-    if (!brand) {
-      return res.status(400).json({"message": "Brand agent not found"});
+    const addon = await addonRepo.findById(id);
+    if (!addon) {
+      return res.status(400).json({"message": "Addon not found"});
     }
-    return res.status(200).json(brand);
+    return res.status(200).json(addon);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -41,11 +42,11 @@ router.put('/:id', async (req, res) => {
     const id = req.params.id;
     let data = req.body;
   
-    const brand = await brandRepo.update(id, data);
-    return res.status(200).json(brand);
+    const addon = await addonRepo.update(id, data);
+    return res.status(200).json(addon);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
 });
 
-export {router as brandAgencyController};
+export {router as addonController};

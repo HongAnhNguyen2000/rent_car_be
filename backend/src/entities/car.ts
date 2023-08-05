@@ -13,7 +13,7 @@ export class Car {
   @ManyToOne(() => BrandAgency)
   agent: Showroom;
 
-  @Column({ length: 50, nullable: false })
+  @Column({ length: 50, unique: true, nullable: false })
   title: string;
 
   @Column({ type: 'int', nullable: false })
