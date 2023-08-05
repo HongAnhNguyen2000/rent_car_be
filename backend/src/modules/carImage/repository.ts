@@ -57,7 +57,7 @@ export class CarImageRepository{
       let primary = await this.carImageRepository.find({ where: { car: {id: carId}, type: 1 } });
       if (primary.length < 1) {
         const imgs = await this.getByCarId(carId);
-        if (!imgs) {
+        if (imgs.length < 1) {
           return null;
         }
         const item = imgs[0]
