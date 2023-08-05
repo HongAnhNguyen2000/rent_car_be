@@ -51,10 +51,10 @@ router.put('/:id', async (req, res) => {
 
 router.post('/:id/image', async (req, res) => {
   try {
-    const images = req.FILES.get("images")
-    if (!images) {
-      res.status(400).json({"message":" No image file provided"});
-    }
+    // const images = req.FILES.get("images")
+    // if (!images) {
+    //   res.status(400).json({"message":" No image file provided"});
+    // }
     res.status(200).json({});
   } catch (error) {
     res.status(400).json({"message": error});
