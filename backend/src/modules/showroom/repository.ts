@@ -53,7 +53,16 @@ export class ShowroomRepository {
         relations: ['showroom'],
         where: { car: {id: carId} }
       });
-      return specificCars.map((specificCar) => specificCar.showroom);  
+
+      const uniqueShowrooms = specificCars.reduce((showrooms, specificCar) => {
+        const exist = showrooms.find((showroom) => showroom.id === specificCar.showroom.id);
+        if (!exist) {
+          showrooms.push(specificCar.showroom);
+        }
+        return showrooms;
+      }, []);
+      return uniqueShowrooms;
+
     } catch (error) {
         console.log(error.message);
         throw error.message;
