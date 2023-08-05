@@ -35,10 +35,10 @@ export class CarImageRepository{
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<CarImage>): Promise<any> {
     try {
-      let carImg = await this.findById(id)
-      carImg = { ...data };
+      let carImg = await this.findById(id);
+      this.carImageRepository.merge(carImg, data);
       return await this.carImageRepository.save(carImg);
     } catch (error) {
       throw "Something was wrong";
@@ -62,11 +62,13 @@ export class CarImageRepository{
         if (imgs.length < 1) {
           return null;
         }
+
         const item = imgs[0]
         item.type = primaryType
         await this.update(item.id, item)
         return item;
       }
+
       return primary[0];
     } catch (error) {
       throw error.message;

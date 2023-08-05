@@ -1,16 +1,19 @@
-import { EntityRepository, Repository, getRepository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Car } from '../../entities/car';
 import { dataSource } from '../../utils/dataSource';
 import { CarImageRepository } from '../carImage/repository';
+import { ShowroomRepository } from '../showroom/repository';
 
 @EntityRepository(Car)
 export class CarRepository{
   private carRepository: Repository<Car> = null;
   private carImageRepository: CarImageRepository;
+  private showroomRepository: ShowroomRepository;
   constructor(
   ) {
     this.carRepository = dataSource.getRepository(Car);
     this.carImageRepository = new CarImageRepository();
+    this.showroomRepository = new ShowroomRepository();
   }
 
   async query(q): Promise<Car[]> {
@@ -47,16 +50,25 @@ export class CarRepository{
     }
   }
 
-  async getAll(): Promise<Car[]> {
+  async getAll(cars): Promise<Car[]> {
     try {
       const result = [];
-      const cars = await this.query({});
       for (const car of cars) {
+        const showrooms = await this.showroomRepository.getByCarId(car.id);
         const img = await this.carImageRepository.getPrimaryByCarId(car.id);
-        const item = { ...car, image: img ? img.link : ""};
+        const item = { ...car, showrooms: showrooms, image: img ? img.link : ""};
         result.push(item);
       }      
       return result;
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  async getAllForAdmin(cars): Promise<Car[]> {
+    try {
+      const cars = await this.query({})
+      return await this.getAll(cars);
     } catch (error) {
       throw error.message;
     }
