@@ -77,6 +77,9 @@ exports.getCarsWithinDistance = async(
         }
         const specificCars = await queryBuilder.getMany();
         const carIds = specificCars.map((specificCar) => specificCar.car.id);
+        if (carIds.length < 1) {
+            return [];
+        }
 
         // Get list car
         const cars = await dataSource
