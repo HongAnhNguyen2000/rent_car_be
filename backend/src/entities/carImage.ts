@@ -9,7 +9,7 @@ export class CarImage {
   @ManyToOne(() => Car)
   car: Car;
 
-  @Column({ type: 'enum', enum: [1, 2, 3], nullable: false })
+  @Column({ type: 'enum', enum: [0, 1], nullable: false })
   type: number;
 
   @Column({ length: 100, nullable: false })

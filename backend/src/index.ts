@@ -1,4 +1,3 @@
-import { createConnection } from 'typeorm';
 import express, { Express, Request, Response } from "express";
 import session from 'express-session';
 import cookieParser from "cookie-parser";
@@ -14,6 +13,7 @@ import { dataSource } from './utils/dataSource';
 import { insurancenController } from './modules/insurance/controller';
 import { addonController } from './modules/addon/controller';
 
+const multer = require("multer");
 const port = process.env.PORT || 5001;
 const app: Express = express();
 
@@ -31,7 +31,7 @@ async function main() {
   app.use(express.json({ limit: "10kb" }));
   app.use(cookieParser());
   app.use(cors({
-    methods: ["POST", "GET", "PUT"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true
   }))
 
@@ -58,6 +58,28 @@ async function main() {
 
   app.all("*", (req: Request, res: Response, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  });
+
+  app.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+      if (error.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({
+          message: "File is too large",
+        });
+      }
+  
+      if (error.code === "LIMIT_FILE_COUNT") {
+        return res.status(400).json({
+          message: "File limit reached",
+        });
+      }
+  
+      if (error.code === "LIMIT_UNEXPECTED_FILE") {
+        return res.status(400).json({
+          message: "File must be an image",
+        });
+      }
+    }
   });
 
   app.listen({ port }, async () => {
