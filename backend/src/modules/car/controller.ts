@@ -128,4 +128,18 @@ router.delete('/image/:carImgId', async (req, res) => {
   }
 });
 
+
+router.get('/admin', async (req, res) => {
+  try {
+    const cars = await carRepo.getAllForAdmin();
+    const result = {
+      maxPage: 1,
+      cars: cars
+    }
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(400).json({"message": error});
+  }
+});
+
 export {router as carController};
