@@ -11,6 +11,7 @@ import { showroomController } from './modules/showroom/controller';
 import { brandAgencyController } from './modules/brand/controller';
 import { dataSource } from './utils/dataSource';
 import AppError from './utils/appError';
+import { profileController } from './modules/profile/controller';
 
 const port = process.env.PORT || 5001;
 const app: Express = express();
@@ -51,6 +52,7 @@ async function main() {
   app.use("/api/v1/car/", carController);
   app.use("/api/v1/showroom/", showroomController);
   app.use("/api/v1/brand", brandAgencyController);
+   app.use("/api/v1/profile", profileController);
 
   app.all("*", (req: Request, res: Response, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

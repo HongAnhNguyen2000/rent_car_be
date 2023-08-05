@@ -5,8 +5,8 @@ import { User } from './user';
 export class Profile {
   @PrimaryGeneratedColumn('uuid')
   id: string;
-    
-  @ManyToOne(() => User)
+
+  @OneToOne(() => User)
   user: User;
 
   @Column({ length: 50, nullable: false })
