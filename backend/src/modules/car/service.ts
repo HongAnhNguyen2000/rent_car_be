@@ -57,6 +57,7 @@ exports.getCarsWithinDistance = async(
             .getRepository(Booking)
             .createQueryBuilder('booking')
             .select('booking.specificCar')
+            .distinct(true)
             .where(`(booking.startAt <= :returnAt AND booking.endAt >= :pickupAt)`, {
                 pickupAt: pickupAt,
                 returnAt: returnAt,
@@ -69,6 +70,7 @@ exports.getCarsWithinDistance = async(
             .getRepository(SpecificCar)
             .createQueryBuilder('specificCar')
             .leftJoinAndSelect('specificCar.car', 'car')
+            .distinct(true)
             .where('specificCar.showroom IN (:showroomIds)', { showroomIds: showroomIds })
             .andWhere('specificCar.status IN (:status)', { status: [CarStatusEnum.Available, CarStatusEnum.Renting] });
 
@@ -85,6 +87,7 @@ exports.getCarsWithinDistance = async(
         const cars = await dataSource
             .getRepository(Car)
             .createQueryBuilder('car')
+            .distinct(true)
             .where('car.id IN (:carIds)', { carIds: carIds })
             .getMany();
 
