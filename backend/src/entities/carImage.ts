@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Car } from './car';
+import { CarImageTypeEnum } from '../utils/const';
 
 @Entity({ name: 'car_images' })
 export class CarImage {
@@ -9,7 +10,7 @@ export class CarImage {
   @ManyToOne(() => Car)
   car: Car;
 
-  @Column({ type: 'enum', enum: [0, 1], nullable: false })
+  @Column({ type: 'enum', enum: CarImageTypeEnum, nullable: false })
   type: number;
 
   @Column({ length: 100, nullable: false })

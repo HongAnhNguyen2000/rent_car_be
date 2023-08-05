@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './user';
 import { Showroom } from './showroom';
+import { StaffTypeEnum } from '../utils/const';
 
 @Entity({ name: 'staffs' })
 export class Staff {
@@ -13,7 +14,7 @@ export class Staff {
   @ManyToOne(() => Showroom)
   showroom: Showroom;
 
-  @Column({ type: 'enum', enum: [1, 2, 3] })
+  @Column({ type: 'enum', enum: StaffTypeEnum })
   role: number;
 
   @Column({ length: 100, nullable: true })

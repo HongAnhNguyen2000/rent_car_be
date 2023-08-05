@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { dataSource } from '../../utils/dataSource';
 import { CarImage } from '../../entities/carImage';
+import { CarImageTypeEnum } from '../../utils/const';
 
 @EntityRepository(CarImage)
 export class CarImageRepository{
@@ -54,14 +55,15 @@ export class CarImageRepository{
 
   async getPrimaryByCarId(carId: string): Promise<CarImage> {
     try {
-      let primary = await this.carImageRepository.find({ where: { car: {id: carId}, type: 1 } });
+      const primaryType = CarImageTypeEnum.Primary;
+      let primary = await this.carImageRepository.find({ where: { car: {id: carId}, type: primaryType } });
       if (primary.length < 1) {
         const imgs = await this.getByCarId(carId);
         if (imgs.length < 1) {
           return null;
         }
         const item = imgs[0]
-        item.type = 1
+        item.type = primaryType
         await this.update(item.id, item)
         return item;
       }

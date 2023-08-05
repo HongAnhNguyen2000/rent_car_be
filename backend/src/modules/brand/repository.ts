@@ -35,13 +35,13 @@ export class BrandAgencyRepository{
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<BrandAgency>): Promise<any> {
     try {
-      let brand = await this.findById(id)
-      brand = { ...data };
-      return await this.brandAgencyRepository.save(brand);
+        let brand = await this.findById(id)
+        this.brandAgencyRepository.merge(brand, data);
+        return await this.brandAgencyRepository.save(brand);
     } catch (error) {
-      throw "Something was wrong";
+        throw "Something was wrong";
     }
   }
 }

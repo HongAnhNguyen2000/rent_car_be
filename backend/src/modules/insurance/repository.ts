@@ -35,13 +35,13 @@ export class InsuranceRepository{
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<Insurance>): Promise<any> {
     try {
-      let insurance = await this.findById(id)
-      insurance = { ...data };
-      return await this.insuranceRepository.save(insurance);
+        let insurance = await this.findById(id)
+        this.insuranceRepository.merge(insurance, data);
+        return await this.insuranceRepository.save(insurance);
     } catch (error) {
-      throw "Something was wrong";
+        throw "Something was wrong";
     }
   }
 }

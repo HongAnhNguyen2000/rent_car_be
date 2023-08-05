@@ -1,13 +1,15 @@
+import Setting from "../utils/setting";
+
 const { S3 } = require("aws-sdk");
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client } = require("@aws-sdk/client-s3");
 const { Upload } = require("@aws-sdk/lib-storage");
 
 exports.awsPutObject = async (key, body) => {
     try {
-        const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-        const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-        const region = process.env.AWS_REGION;
-        const bucket = process.env.AWS_BUCKET;
+        const accessKeyId = Setting.AWS_ACCESS_KEY_ID ;
+        const secretAccessKey = Setting.AWS_SECRET_ACCESS_KEY;
+        const region = Setting.AWS_REGION;
+        const bucket = Setting.AWS_BUCKET;
         const parallelUploads3 = new Upload({
           client: new S3Client({
               credentials: {

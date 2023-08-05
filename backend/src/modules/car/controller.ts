@@ -1,7 +1,8 @@
 import express from "express";
 import { CarRepository } from "./repository";
-import { fileUpload } from "../../services/fileService";
 import { CarImageRepository } from "../carImage/repository";
+import { CarImageTypeEnum } from "../../utils/const";
+import { fileUpload } from "../../services/fileService";
 const carService = require("./service");
 
 const router = express.Router();
@@ -15,9 +16,9 @@ router.get('', async (req, res) => {
       maxPage: 1,
       cars: cars
     }
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (error) {
-    res.status(400).json({"message": error});
+    return res.status(400).json({"message": error});
   }
 });
 
@@ -25,9 +26,9 @@ router.post('', async (req, res) => {
   try {
     const data = req.body;
     const car = await carRepo.create(data);
-    res.status(200).json(car);
+    return res.status(200).json(car);
   } catch (error) {
-    res.status(400).json({"message": error});
+    return res.status(400).json({"message": error});
   }
 });
 
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id;
     const car = await carRepo.getById(id);
     if (!car) {
-      return res.status(400).json({"message": "Car is not exist"});
+      return res.status(400).json({"message": "Car not found"});
     }
 
     return res.status(200).json(car);
@@ -50,9 +51,9 @@ router.put('/:id', async (req, res) => {
     const id = req.params.id;
     let data = req.body;
     const car = await carRepo.update(id, data);
-    res.status(200).json(car);
+    return res.status(200).json(car);
   } catch (error) {
-    res.status(400).json({"message": error});
+    return res.status(400).json({"message": error});
   }
 });
 
@@ -63,7 +64,7 @@ router.post('/:id/image', fileUpload.array("images"), async (req, res) => {
 
     const carItem = await carRepo.findById(id);
     if (!carItem) {
-      return res.status(400).json({"message": "Car is not exist"});
+      return res.status(400).json({"message": "Car not found"});
     }
 
     if (!images) {
@@ -76,7 +77,7 @@ router.post('/:id/image', fileUpload.array("images"), async (req, res) => {
     for (const item of urls) {
       let carImg = {
         car: carId,
-        type: 0,
+        type: CarImageTypeEnum.Normal,
         link: item,
       }
       let carImgItem = await carImgRepo.create(carImg);

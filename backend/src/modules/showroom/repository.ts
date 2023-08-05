@@ -1,7 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Showroom } from '../../entities/showroom';
 import { dataSource } from '../../utils/dataSource';
-import AppError from '../../utils/appError';
 
 @EntityRepository(Showroom)
 export class ShowroomRepository {
@@ -35,10 +34,10 @@ export class ShowroomRepository {
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<Showroom>): Promise<any> {
     try {
         let showroom = await this.findById(id)
-        showroom = { ...data };
+        this.showroomRepository.merge(showroom, data);
         return await this.showroomRepository.save(showroom);
     } catch (error) {
         throw "Something was wrong";

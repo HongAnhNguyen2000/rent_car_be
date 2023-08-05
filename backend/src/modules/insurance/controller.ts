@@ -28,6 +28,9 @@ router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
     const insurance = await insuranceRepo.findById(id);
+    if (!insurance) {
+      return res.status(400).json({"message": "Insurance not found"});
+    }
     res.status(200).json(insurance);
   } catch (error) {
     res.status(400).json({"message": error});

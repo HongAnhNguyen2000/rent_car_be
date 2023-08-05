@@ -1,6 +1,5 @@
-import { EntityRepository, Repository, QueryFailedError } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { dataSource } from '../../utils/dataSource';
-import AppError from '../../utils/appError';
 import { Addon } from '../../entities/addon';
 
 @EntityRepository(Addon)
@@ -35,13 +34,13 @@ export class AddonRepository{
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<Addon>): Promise<any> {
     try {
-      let addon = await this.findById(id)
-      addon = { ...data };
-      return await this.addonRepository.save(addon);
+        let addon = await this.findById(id)
+        this.addonRepository.merge(addon, data);
+        return await this.addonRepository.save(addon);
     } catch (error) {
-      throw "Something was wrong";
+        throw "Something was wrong";
     }
   }
 }

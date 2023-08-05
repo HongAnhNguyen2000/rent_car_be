@@ -37,10 +37,10 @@ export class CarRepository{
     }
   }
 
-  async update(id, data): Promise<any> {
+  async update(id, data: Partial<Car>): Promise<any> {
     try {
-      let car = await this.findById(id)
-      car = { ...data };
+      let car = await this.findById(id);
+      this.carRepository.merge(car, data);
       return await this.carRepository.save(car);
     } catch (error) {
       throw "Something was wrong";
