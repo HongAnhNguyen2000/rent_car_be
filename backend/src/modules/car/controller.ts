@@ -36,7 +36,10 @@ router.get('', [
       new Date(params.pickupAt),
       new Date(params.returnAt)
     );
-
+    if (!listCar) {
+      return res.status(400).json({ maxPage: 0, cars: [] });
+    }
+  
     const cars = await carRepo.getAll(listCar);
     const result = {
       maxPage: 1,
