@@ -5,12 +5,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import passport from "./modules/user/passport";
+import AppError from './utils/appError';
 import { userController } from './modules/user/controller';
 import { carController } from './modules/car/controller';
 import { showroomController } from './modules/showroom/controller';
 import { brandAgencyController } from './modules/brand/controller';
 import { dataSource } from './utils/dataSource';
-import AppError from './utils/appError';
+import { insurancenController } from './modules/insurance/controller';
+import { addonController } from './modules/addon/controller';
 
 const port = process.env.PORT || 5001;
 const app: Express = express();
@@ -51,6 +53,8 @@ async function main() {
   app.use("/api/v1/car", carController);
   app.use("/api/v1/showroom", showroomController);
   app.use("/api/v1/brand", brandAgencyController);
+  app.use("/api/v1/addon", addonController);
+  app.use("/api/v1/insurance", insurancenController);
 
   app.all("*", (req: Request, res: Response, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

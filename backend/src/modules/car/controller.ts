@@ -8,7 +8,11 @@ const carRepo = new CarRepository()
 router.get('', async (req, res) => {
   try {
     const cars = await carRepo.query({});
-    res.status(200).json(cars);
+    const result = {
+      maxPage: 1,
+      cars: cars
+    }
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({"message": error});
   }
@@ -40,6 +44,28 @@ router.put('/:id', async (req, res) => {
     let data = req.body;
     const car = await carRepo.update(id, data);
     res.status(200).json(car);
+  } catch (error) {
+    res.status(400).json({"message": error});
+  }
+});
+
+router.post('/:id/image', async (req, res) => {
+  try {
+    const images = req.FILES.get("images")
+    if (!images) {
+      res.status(400).json({"message":" No image file provided"});
+    }
+    res.status(200).json({});
+  } catch (error) {
+    res.status(400).json({"message": error});
+  }
+});
+
+router.delete('/:id/image/:carImgId', async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    res.status(200).json({});
   } catch (error) {
     res.status(400).json({"message": error});
   }
