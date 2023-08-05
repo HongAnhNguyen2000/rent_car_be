@@ -1,13 +1,13 @@
 import express from "express";
-import { AddonRepository } from "./repository";
+import { SpecificCarRepository } from "./repository";
 
 const router = express.Router();
-const addonRepo = new AddonRepository()
+const specificCarRepo = new SpecificCarRepository()
 
 router.get('', async (req, res) => {
   try {
-    const addons = await addonRepo.query({});
-    return res.status(200).json(addons);
+    const specificCars = await specificCarRepo.query({ relations: ['showroom', 'car'] });
+    return res.status(200).json(specificCars);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -16,8 +16,8 @@ router.get('', async (req, res) => {
 router.post('', async (req, res) => {
   try {
     const data = req.body;
-    const addon = await addonRepo.create(data);
-    return res.status(200).json(addon);
+    const specificCar = await specificCarRepo.create(data);
+    return res.status(200).json(specificCar);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -26,11 +26,11 @@ router.post('', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const id = req.params.id;
-    const addon = await addonRepo.findById(id);
-    if (!addon) {
-      return res.status(400).json({"message": "Addon not found"});
+    const specificCar = await specificCarRepo.findById(id);
+    if (!specificCar) {
+      return res.status(400).json({"message": "Specific car not found"});
     }
-    return res.status(200).json(addon);
+    return res.status(200).json(specificCar);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
@@ -41,11 +41,11 @@ router.put('/:id', async (req, res) => {
     const id = req.params.id;
     let data = req.body;
   
-    const addon = await addonRepo.update(id, data);
-    return res.status(200).json(addon);
+    const specificCar = await specificCarRepo.update(id, data);
+    return res.status(200).json(specificCar);
   } catch (error) {
     return res.status(400).json({"message": error});
   }
 });
 
-export {router as addonController};
+export {router as specificCarController};

@@ -1,13 +1,16 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { Showroom } from '../../entities/showroom';
 import { dataSource } from '../../utils/dataSource';
+import { Showroom } from '../../entities/showroom';
+import { SpecificCar } from '../../entities/specificCar';
 
 @EntityRepository(Showroom)
 export class ShowroomRepository {
   private showroomRepository: Repository<Showroom> = null;
+  private specificCarRepository: Repository<SpecificCar> = null;
   constructor(
   ) {
     this.showroomRepository = dataSource.getRepository(Showroom);
+    this.specificCarRepository = dataSource.getRepository(SpecificCar);
   }
 
   async query(q): Promise<Showroom[]> {
@@ -41,6 +44,19 @@ export class ShowroomRepository {
         return await this.showroomRepository.save(showroom);
     } catch (error) {
         throw "Something was wrong";
+    }
+  }
+
+  async getByCarId(carId): Promise<Showroom[]> {
+    try {
+      const specificCars = await this.specificCarRepository.find({ 
+        relations: ['showroom'],
+        where: { car: {id: carId} }
+      });
+      return specificCars.map((specificCar) => specificCar.showroom);  
+    } catch (error) {
+        console.log(error.message);
+        throw error.message;
     }
   }
 }

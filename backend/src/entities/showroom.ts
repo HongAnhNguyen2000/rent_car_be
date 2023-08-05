@@ -9,10 +9,10 @@ export class Showroom extends BaseEntity {
   name: string;
 
   @Column('double')
-  longitude: number;
+  latitude: number;
 
   @Column('double')
-  latitude: number;
+  longitude: number;
 
   @Column({ length: 100 })
   address: string;

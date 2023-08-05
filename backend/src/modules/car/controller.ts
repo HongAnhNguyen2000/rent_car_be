@@ -3,15 +3,41 @@ import { CarRepository } from "./repository";
 import { CarImageRepository } from "../carImage/repository";
 import { CarImageTypeEnum } from "../../utils/const";
 import { fileUpload } from "../../services/fileService";
+
+const { check, validationResult } = require("express-validator");
 const carService = require("./service");
 
 const router = express.Router();
 const carRepo = new CarRepository();
 const carImgRepo = new CarImageRepository();
 
-router.get('', async (req, res) => {
+router.get('', [
+  check("latitude").notEmpty().isFloat().toFloat(),
+  check("longitude").notEmpty().isFloat().toFloat(),
+  check('pickupAt')
+    .notEmpty()
+    .isISO8601({ strict: true })
+    .custom((value) => new Date(value) > new Date()),
+  check('returnAt')
+    .notEmpty()
+    .isISO8601({ strict: true })
+    .custom((value) => new Date(value) > new Date()),
+], async (req, res) => {
   try {
-    const cars = await carRepo.getAll();
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const params = req.query;
+    const listCar = await carService.getCarsWithinDistance(
+      params.latitude,
+      params.longitude,
+      new Date(params.pickupAt),
+      new Date(params.returnAt)
+    );
+
+    const cars = await carRepo.getAll(listCar);
     const result = {
       maxPage: 1,
       cars: cars
