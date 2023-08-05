@@ -65,7 +65,7 @@ export class CarRepository{
     }
   }
 
-  async getAllForAdmin(cars): Promise<Car[]> {
+  async getAllForAdmin(): Promise<Car[]> {
     try {
       const cars = await this.query({})
       return await this.getAll(cars);
