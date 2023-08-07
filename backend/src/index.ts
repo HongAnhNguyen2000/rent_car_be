@@ -11,7 +11,6 @@ import { showroomController } from './modules/showroom/controller';
 import { brandAgencyController } from './modules/brand/controller';
 import { dataSource } from './utils/dataSource';
 
-import AppError from './utils/appError';
 import { profileController } from './modules/profile/controller';
 
 import { insurancenController } from './modules/insurance/controller';
