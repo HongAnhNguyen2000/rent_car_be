@@ -7,7 +7,7 @@ import LoadingScreen from 'components/common/LoadingScreen';
 
 function App() {
   const { isInitialized } = useAuth();
-  console.log(isInitialized);
+  console.log("isInitialized: ", isInitialized);
   
   return (
     <ThemeConfig>
