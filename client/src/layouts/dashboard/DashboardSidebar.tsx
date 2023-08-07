@@ -1,23 +1,17 @@
 import { useEffect } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
-// material
 import { alpha, experimentalStyled as styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography } from '@mui/material';
-// hooks
-import useAuth from '../../hooks/useAuth';
-// routes
-import { PATH_DASHBOARD, PATH_DOCS } from '../../routes/paths';
-// components
-import Logo from '../../components/Logo';
-import MyAvatar from '../../components/MyAvatar';
-import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-import { MHidden } from '../../components/@material-extend';
-//
+import useAuth from 'hooks/useAuth';
+import { PATH_DASHBOARD, PATH_DOCS } from 'routes/paths';
+import Logo from 'components/common/Logo';
+import MyAvatar from 'components/common/MyAvatar';
+import Scrollbar from 'components/common/Scrollbar';
+import NavSection from 'components/common/NavSection';
+import { MHidden } from 'components/@material-extend';
 import sidebarConfig from './SidebarConfig';
-import { DocIcon } from '../../assets';
+// import { DocIcon } from 'assets';
 
-// ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
 
@@ -98,7 +92,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }: Dash
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
         <DocStyle>
-          <DocIcon sx={{ width: 36, height: 36, mb: 2 }} />
+          {/* <DocIcon sx={{ width: 36, height: 36, mb: 2 }} /> */}
           <Typography gutterBottom variant="subtitle1" sx={{ color: 'grey.800' }}>
             Hi, {user?.displayName}
           </Typography>

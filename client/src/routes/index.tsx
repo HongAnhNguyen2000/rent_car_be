@@ -55,18 +55,18 @@ export default function Router() {
     },
 
     // Dashboard Routes
-    // {
-    //   path: 'dashboard',
-    //   element: (
-    //     <AuthGuard>
-    //       <DashboardLayout />
-    //     </AuthGuard>
-    //   ),
-    //   children: [
-    //     { path: '/', element: <Navigate to="/dashboard/app" replace /> },
-    //     { path: 'app', element: <GeneralApp /> },
-    //   ]
-    // },
+    {
+      path: 'dashboard',
+      element: (
+        <AuthGuard>
+          <DashboardLayout />
+        </AuthGuard>
+      ),
+      children: [
+        { path: '', element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <GeneralApp /> },
+      ]
+    },
 
     // Main Routes
     // {
@@ -81,7 +81,11 @@ export default function Router() {
       path: '/',
       element: <MainLayout />,
       children: [
-        { path: '/', element: <LandingPage /> },
+        { path: '', element: 
+          <AuthGuard>
+            <DashboardLayout />
+          </AuthGuard>
+        }
       ]
     },
     // { path: '*', element: <Navigate to="/404" replace /> }
@@ -95,3 +99,4 @@ const Login = Loadable(lazy(() => import('pages/authentication/Login')));
 // Main
 const LandingPage = Loadable(lazy(() => import('pages/common/LandingPage')));
 // Dashboard
+const GeneralApp = Loadable(lazy(() => import('pages/dashboard/GeneralApp')));

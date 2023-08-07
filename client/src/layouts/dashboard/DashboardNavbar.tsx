@@ -1,17 +1,13 @@
 import { Icon } from '@iconify/react';
 import menu2Fill from '@iconify/icons-eva/menu-2-fill';
-// material
 import { alpha, experimentalStyled as styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
-// components
-import { MHidden } from '../../components/@material-extend';
+import { MHidden } from 'components/@material-extend';
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
 import ContactsPopover from './ContactsPopover';
-import NotificationsPopover from './NotificationsPopover';
 
-// ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
 const APPBAR_MOBILE = 64;
@@ -56,7 +52,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
         <Stack direction="row" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
-          <NotificationsPopover />
           <ContactsPopover />
           <AccountPopover />
         </Stack>

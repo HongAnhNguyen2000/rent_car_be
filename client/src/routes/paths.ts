@@ -22,7 +22,7 @@ export const PATH_PAGE = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
-    app: path(ROOTS_DASHBOARD, '/app'),
+    app: path(ROOTS_DASHBOARD, '/app')
   },
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

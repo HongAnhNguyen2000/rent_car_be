@@ -9,14 +9,14 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@mui/material';
 // routes
-import { PATH_DASHBOARD } from '../../routes/paths';
+import { PATH_DASHBOARD } from 'routes/paths';
 // hooks
-import useAuth from '../../hooks/useAuth';
-import useIsMountedRef from '../../hooks/useIsMountedRef';
+import useAuth from 'hooks/useAuth';
+import useIsMountedRef from 'hooks/useIsMountedRef';
 // components
-import { MIconButton } from '../../components/@material-extend';
-import MyAvatar from '../../components/MyAvatar';
-import MenuPopover from '../../components/MenuPopover';
+import { MIconButton } from 'components/@material-extend';
+import MyAvatar from 'components/common/MyAvatar';
+import MenuPopover from 'components/common/MenuPopover';
 
 // ----------------------------------------------------------------------
 

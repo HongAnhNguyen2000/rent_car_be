@@ -4,15 +4,15 @@ import { Link as RouterLink } from 'react-router-dom';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from 'routes/paths';
 // hooks
-import useAuth from '../../hooks/useAuth';
+import useAuth from 'hooks/useAuth';
 // layouts
-import AuthLayout from '../../layouts/AuthLayout';
+import AuthLayout from 'layouts/AuthLayout';
 // components
-import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
-import { LoginForm } from '../../components/authentication/login';
+import Page from 'components/common/Page';
+import { MHidden } from 'components/@material-extend';
+import { LoginForm } from 'components/authentication/login';
 
 // ----------------------------------------------------------------------
 
@@ -48,13 +48,6 @@ export default function Login() {
 
   return (
     <RootStyle title="Login | Minimal-UI">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
-          Get started
-        </Link>
-      </AuthLayout>
-
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>

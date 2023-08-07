@@ -2,12 +2,11 @@ import { useRef, useState } from 'react';
 // material
 import { Box, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 // hooks
-import useLocales from '../../hooks/useLocales';
+import useLocales from 'hooks/useLocales';
 // components
-import MenuPopover from '../../components/MenuPopover';
-import { MIconButton } from '../../components/@material-extend';
+import MenuPopover from 'components/common/MenuPopover';
+import { MIconButton } from 'components/@material-extend';
 
-// ----------------------------------------------------------------------
 
 export default function LanguagePopover() {
   const anchorRef = useRef(null);

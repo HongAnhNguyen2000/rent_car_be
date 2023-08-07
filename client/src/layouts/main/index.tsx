@@ -31,9 +31,8 @@ export default function MainLayout() {
             <ScrollLink to="move_top" spy smooth>
               <Logo sx={{ mb: 1, mx: 'auto', cursor: 'pointer' }} />
             </ScrollLink>
-
             <Typography variant="caption" component="p">
-              made by Evs Rental
+              Made by Evs Rental
             </Typography>
           </Container>
         </Box>
