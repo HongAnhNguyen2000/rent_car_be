@@ -78,6 +78,7 @@ services:
       - ../client:/code:delegated
       - /code/node_modules
     tty: ${DOCKER_TTY}
+    command: ${DOCKER_CLIENT_COMMAND}
     networks:
       - shared_network
 
