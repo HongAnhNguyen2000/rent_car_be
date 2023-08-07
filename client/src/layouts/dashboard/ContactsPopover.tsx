@@ -1,19 +1,14 @@
 import { Icon } from '@iconify/react';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import peopleFill from '@iconify/icons-eva/people-fill';
-// material
 import { alpha } from '@mui/material/styles';
 import { ListItem, ListItemAvatar, Typography, ListItemText, Avatar } from '@mui/material';
-// hooks
-import useIsMountedRef from '../../hooks/useIsMountedRef';
-// utils
-import axios from '../../utils/axios';
-import { fToNow } from '../../utils/formatTime';
-// components
-import Scrollbar from '../../components/Scrollbar';
-import MenuPopover from '../../components/MenuPopover';
-import BadgeStatus from '../../components/BadgeStatus';
-import { MIconButton } from '../../components/@material-extend';
+import useIsMountedRef from 'hooks/useIsMountedRef';
+import axios from 'utils/axios';
+import { fToNow } from 'utils/formatTime';
+import Scrollbar from 'components/common/Scrollbar';
+import MenuPopover from 'components/common/MenuPopover';
+import { MIconButton } from 'components/@material-extend';
 
 // ----------------------------------------------------------------------
 
@@ -87,7 +82,6 @@ export default function ContactsPopover() {
               >
                 <ListItemAvatar sx={{ position: 'relative' }}>
                   <Avatar src={avatar} />
-                  <BadgeStatus status={status} sx={{ position: 'absolute', right: 1, bottom: 1 }} />
                 </ListItemAvatar>
                 <ListItemText
                   primaryTypographyProps={{ typography: 'subtitle2', mb: 0.25 }}

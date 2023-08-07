@@ -23,7 +23,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function LandingPage() {
   return (
-    <div>
-    </div>
+    <div>hi</div>
   );
 }

@@ -3,7 +3,7 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 // material
 import { Box, Button, Typography, Container } from '@mui/material';
 // components
-import Page from '../components/Page';
+import Page from '../components/common/Page';
 import { SeverErrorIllustration } from '../assets';
 
 // ----------------------------------------------------------------------
