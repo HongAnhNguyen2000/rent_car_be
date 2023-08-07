@@ -10,9 +10,14 @@ import { carController } from './modules/car/controller';
 import { showroomController } from './modules/showroom/controller';
 import { brandAgencyController } from './modules/brand/controller';
 import { dataSource } from './utils/dataSource';
+
+import AppError from './utils/appError';
+import { profileController } from './modules/profile/controller';
+
 import { insurancenController } from './modules/insurance/controller';
 import { addonController } from './modules/addon/controller';
 import { specificCarController } from "./modules/specificCar/controller";
+
 
 const multer = require("multer");
 const port = process.env.PORT || 5001;
@@ -55,8 +60,12 @@ async function main() {
   app.use("/api/v1/specific-car", specificCarController);
   app.use("/api/v1/showroom", showroomController);
   app.use("/api/v1/brand", brandAgencyController);
+
+  app.use("/api/v1/profile", profileController);
+
   app.use("/api/v1/addon", addonController);
   app.use("/api/v1/insurance", insurancenController);
+
 
   app.all("*", (req: Request, res: Response, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

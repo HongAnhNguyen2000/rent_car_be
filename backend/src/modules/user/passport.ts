@@ -13,10 +13,9 @@ passport.use(new GoogleStrategy({
   callbackURL: Setting.GOOGLE_CALLBACK_URL,
   passReqToCallback: true 
 },
-function(request: Request, accessToken: string, refreshToken: string, profile: GoogleProfile, done: Google.VerifyCallback) {
-  done(null, profile);
-}
-));
+  function (request: Request, accessToken: string, refreshToken: string, params, profile: GoogleProfile, done: Google.VerifyCallback) {
+    done(null, profile);
+  }))
 
 passport.serializeUser((user: Express.User, done) => {
     done(null, user)

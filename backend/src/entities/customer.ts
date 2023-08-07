@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { User } from './user';
 
-@Entity({ name: 'customers' })
+@Entity({ name: 'customer' })
+
 export class Customer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -17,4 +19,6 @@ export class Customer {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
 }
+
