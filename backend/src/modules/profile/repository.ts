@@ -21,9 +21,15 @@ export class ProfileRepository{
 
   async findById(id: string): Promise<Profile> {
     try {
-      const hello = await this.profileRepository.findOne({ where: { id } });
-      console.log('hello', hello)
-      return hello
+      return await this.profileRepository.findOne({ where: { id } });
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  async findByUserId(userId: string): Promise<Profile> {
+    try {
+      return await this.profileRepository.findOne({ where: { user: { id: userId }} });
     } catch (error) {
       throw error.message;
     }

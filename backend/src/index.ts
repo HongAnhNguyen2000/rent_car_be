@@ -53,11 +53,11 @@ async function main() {
   app.use (passport.session());
 
   app.use("/api/v1/user", userController)
+  app.use("/api/v1/profile", profileController);
   app.use("/api/v1/car", carController);
   app.use("/api/v1/specific-car", specificCarController);
   app.use("/api/v1/showroom", showroomController);
   app.use("/api/v1/brand", brandAgencyController);
-  app.use("/api/v1/profile", profileController);
   app.use("/api/v1/addon", addonController);
   app.use("/api/v1/insurance", insurancenController);
 

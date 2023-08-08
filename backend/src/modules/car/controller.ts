@@ -6,7 +6,7 @@ import { fileUpload } from "../../services/fileService";
 
 const { check, validationResult } = require("express-validator");
 const carService = require("./service");
-
+const auth = require("../../middleware/auth")
 const router = express.Router();
 const carRepo = new CarRepository();
 const carImgRepo = new CarImageRepository();
@@ -51,7 +51,7 @@ router.get('', [
   }
 });
 
-router.post('', async (req, res) => {
+router.post('', auth.isStaff, async (req, res) => {
   try {
     const data = req.body;
     const car = await carRepo.create(data);
@@ -75,7 +75,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isStaff, async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;
@@ -86,7 +86,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.post('/:id/image', fileUpload.array("images"), async (req, res) => {
+router.post('/:id/image', auth.isStaff, fileUpload.array("images"), async (req, res) => {
   try {
     const id = req.params.id;
     const images = req.files;
@@ -119,7 +119,7 @@ router.post('/:id/image', fileUpload.array("images"), async (req, res) => {
   }
 });
 
-router.delete('/image/:carImgId', async (req, res) => {
+router.delete('/image/:carImgId', auth.isStaff, async (req, res) => {
   try {
     const carImgId = req.params.carImgId;
     res.status(200).json({});
@@ -129,7 +129,7 @@ router.delete('/image/:carImgId', async (req, res) => {
 });
 
 
-router.get('/admin/all', async (req, res) => {
+router.get('/admin/all', auth.isStaff, async (req, res) => {
   try {
     const cars = await carRepo.getAllForAdmin();
     const result = {

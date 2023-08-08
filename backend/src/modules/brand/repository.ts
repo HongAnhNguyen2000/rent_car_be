@@ -1,7 +1,6 @@
 import { EntityRepository, Repository, QueryFailedError } from 'typeorm';
 import { BrandAgency } from '../../entities/brandAgency';
 import { dataSource } from '../../utils/dataSource';
-import AppError from '../../utils/appError';
 
 @EntityRepository(BrandAgency)
 export class BrandAgencyRepository{

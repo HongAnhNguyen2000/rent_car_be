@@ -1,6 +1,7 @@
 import express from "express";
 import { AddonRepository } from "./repository";
 
+const auth = require("../../middleware/auth")
 const router = express.Router();
 const addonRepo = new AddonRepository()
 
@@ -13,7 +14,7 @@ router.get('', async (req, res) => {
   }
 });
 
-router.post('', async (req, res) => {
+router.post('', auth.isStaff, async (req, res) => {
   try {
     const data = req.body;
     const addon = await addonRepo.create(data);
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isStaff, async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;

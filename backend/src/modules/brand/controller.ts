@@ -1,10 +1,11 @@
 import express from "express";
 import { BrandAgencyRepository } from "./repository";
 
+const auth = require("../../middleware/auth")
 const router = express.Router();
 const brandRepo = new BrandAgencyRepository()
 
-router.get('', async (req, res) => {
+router.get('', auth.isStaff, async (req, res) => {
   try {
     const brands = await brandRepo.query({});
     return res.status(200).json(brands);
@@ -13,7 +14,7 @@ router.get('', async (req, res) => {
   }
 });
 
-router.post('', async (req, res) => {
+router.post('', auth.isStaff,async (req, res) => {
   try {
     const data = req.body;
     const brand = await brandRepo.create(data);
@@ -23,7 +24,7 @@ router.post('', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth.isStaff,async (req, res) => {
   try {
     const id = req.params.id;
     const brand = await brandRepo.findById(id);
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isStaff,async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;

@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, Not, IsNull } from 'typeorm';
 import { dataSource } from '../../utils/dataSource';
 import { Showroom } from '../../entities/showroom';
 import { SpecificCar } from '../../entities/specificCar';
@@ -51,9 +51,9 @@ export class ShowroomRepository {
     try {
       const specificCars = await this.specificCarRepository.find({ 
         relations: ['showroom'],
-        where: { car: {id: carId} }
+        where: { car: {id: carId}, showroom: Not(IsNull()) }
       });
-
+      
       const uniqueShowrooms = specificCars.reduce((showrooms, specificCar) => {
         const exist = showrooms.find((showroom) => showroom.id === specificCar.showroom.id);
         if (!exist) {
