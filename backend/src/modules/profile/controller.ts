@@ -1,19 +1,22 @@
 import express from "express";
 import { ProfileRepository } from "./repository";
+import { User } from "../../entities/user";
 
+const auth = require("../../middleware/auth");
 const router = express.Router();
 const profileRepo = new ProfileRepository();
 
-router.get('', async (req, res) => {
+router.get('', auth.isAuthenticated, async (req, res) => {
   try {
-    const profile = await profileRepo.query({});
+    const user = req.user as User;
+    const profile = await profileRepo.findByUserId(user.id);
     res.status(200).json(profile);
   } catch (error) {
-    res.status(400).json({"message": error});
+    return res.status(400).json({"message": error});
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('', auth.isStaff, async (req, res, next) => {
   try {
       const data = req.body;
       if (!data.userId) {
@@ -27,7 +30,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth.isAuthenticated, async (req, res) => {
   try {
     const id = req.params.id;
     const profile = await profileRepo.findById(id);
@@ -37,7 +40,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isAuthenticated, async (req, res) => {
   try {
     const id = req.params.id;
     const data = req.body;

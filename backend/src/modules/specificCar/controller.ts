@@ -1,10 +1,11 @@
 import express from "express";
 import { SpecificCarRepository } from "./repository";
 
+const auth = require("../../middleware/auth")
 const router = express.Router();
 const specificCarRepo = new SpecificCarRepository()
 
-router.get('', async (req, res) => {
+router.get('', auth.isStaff, async (req, res) => {
   try {
     const specificCars = await specificCarRepo.query({ relations: ['showroom', 'car'] });
     return res.status(200).json(specificCars);
@@ -13,7 +14,7 @@ router.get('', async (req, res) => {
   }
 });
 
-router.post('', async (req, res) => {
+router.post('', auth.isStaff, async (req, res) => {
   try {
     const data = req.body;
     const specificCar = await specificCarRepo.create(data);
@@ -23,7 +24,7 @@ router.post('', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth.isStaff, async (req, res) => {
   try {
     const id = req.params.id;
     const specificCar = await specificCarRepo.findById(id);
@@ -36,7 +37,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isStaff, async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;

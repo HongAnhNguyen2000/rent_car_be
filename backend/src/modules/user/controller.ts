@@ -8,9 +8,9 @@ router.get('', (req, res) => {
   res.send("list user")
 });
 
-router.post("/register", userService.register);
+router.post("/register-staff", userService.registerStaff);
+router.post("/register", userService.registerCustomer);
 router.post("/login", userService.login);
-
 router.post('/google/authentication', userService.oauthAppLogin)
 
 

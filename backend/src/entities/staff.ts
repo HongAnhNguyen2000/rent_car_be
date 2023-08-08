@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { User } from './user';
 import { Showroom } from './showroom';
 import { StaffTypeEnum } from '../utils/const';
@@ -8,7 +8,8 @@ export class Staff {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User)
+  @OneToOne(() => User)
+  @JoinColumn()
   user: User;
 
   @ManyToOne(() => Showroom)

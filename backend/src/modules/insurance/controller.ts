@@ -1,7 +1,7 @@
 import express from "express";
 import { InsuranceRepository } from "./repository";
-import AppError from "../../utils/appError";
 
+const auth = require("../../middleware/auth")
 const router = express.Router();
 const insuranceRepo = new InsuranceRepository()
 
@@ -14,7 +14,7 @@ router.get('', async (req, res) => {
   }
 });
 
-router.post('', async (req, res) => {
+router.post('', auth.isStaff, async (req, res) => {
   try {
     const data = req.body;
     const insurance = await insuranceRepo.create(data);
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth.isStaff, async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;

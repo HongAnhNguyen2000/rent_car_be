@@ -1,5 +1,5 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToOne, JoinColumn } from 'typeorm';
 import { User } from './user';
 
 @Entity({ name: 'customer' })
@@ -8,10 +8,11 @@ export class Customer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User)
+  @OneToOne(() => User)
+  @JoinColumn()
   user: User;
 
-  @Column({ length: 120, nullable: false })
+  @Column({ length: 120, nullable: false, default: 'Any' })
   driverLicense: string;
 
   @CreateDateColumn({ type: 'timestamp' })

@@ -1,4 +1,5 @@
 export default class Setting {
+    static JWT_KEY: string = process.env.JWT_KEY || '';
     static AWS_ACCESS_KEY_ID: string = process.env.AWS_ACCESS_KEY_ID || '';
     static AWS_SECRET_ACCESS_KEY: string = process.env.AWS_SECRET_ACCESS_KEY || '';
     static AWS_REGION: string = process.env.AWS_REGION || '';
