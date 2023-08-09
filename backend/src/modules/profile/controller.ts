@@ -40,12 +40,13 @@ router.get('/:id', auth.isAuthenticated, async (req, res) => {
   }
 });
 
-router.put('/:id', auth.isAuthenticated, async (req, res) => {
+router.put('', auth.isAuthenticated, async (req, res) => {
   try {
-    const id = req.params.id;
+const user = req.user as User;
+    const profile = await profileRepo.findByUserId(user.id);
     const data = req.body;
-    const profile = await profileRepo.update(id, data);
-    res.status(200).json(profile);
+    const result = await profileRepo.update(profile.id, data);
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({"message": error});
   }

@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, In } from 'typeorm';
+import { EntityRepository, Repository, In, Not } from 'typeorm';
 import { dataSource } from '../../utils/dataSource';
 import { SpecificCar } from '../../entities/specificCar';
 import { CarStatusEnum } from '../../utils/const';

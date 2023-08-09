@@ -14,6 +14,7 @@ import { profileController } from './modules/profile/controller';
 import { insurancenController } from './modules/insurance/controller';
 import { addonController } from './modules/addon/controller';
 import { specificCarController } from "./modules/specificCar/controller";
+import { bookingController } from "./modules/booking/controller";
 
 
 const multer = require("multer");
@@ -60,6 +61,7 @@ async function main() {
   app.use("/api/v1/brand", brandAgencyController);
   app.use("/api/v1/addon", addonController);
   app.use("/api/v1/insurance", insurancenController);
+  app.use("/api/v1/booking", bookingController);
 
 
   app.all("*", (req: Request, res: Response, next) => {

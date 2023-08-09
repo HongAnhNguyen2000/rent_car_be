@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, In } from 'typeorm';
 import { dataSource } from '../../utils/dataSource';
 import { Addon } from '../../entities/addon';
 
@@ -21,6 +21,14 @@ export class AddonRepository{
   async findById(id): Promise<Addon> {
     try {
       return await this.addonRepository.findOne({ where: { id } });
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
+  async getByIds(ids): Promise<Addon[]> {
+    try {
+      return await this.addonRepository.find({ where: { id: In(ids) } });
     } catch (error) {
       throw error.message;
     }

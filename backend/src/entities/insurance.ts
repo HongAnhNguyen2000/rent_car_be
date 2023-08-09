@@ -8,9 +8,6 @@ export class Insurance {
   @Column({ length: 50, unique: true, nullable: false })
   name: string;
 
-  @Column({ type: 'int', nullable: false })
-  status: number;
-
   @Column({ type: 'float', nullable: false })
   price: number;
 
