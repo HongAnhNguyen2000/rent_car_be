@@ -60,13 +60,13 @@ export class Booking {
   @Column({ length: 120, nullable: true })
   paymentCode: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', nullable: true  })
   paymentAt: Date;
 
   @Column({ type: 'float', nullable: false })
   price: number;
 
-  @Column({ type: 'float', nullable: false })
+  @Column({ type: 'float', nullable: false, default: 0 })
   discount: number;
 
   @Column({ type: 'float', nullable: false })
@@ -75,7 +75,7 @@ export class Booking {
   @Column({ type: 'float', nullable: false })
   paid: number;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   powerLeft: number;
 
   @Column({ type: 'text', nullable: true })

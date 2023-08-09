@@ -15,6 +15,9 @@ export class Customer {
   @Column({ length: 120, nullable: false, default: 'Any' })
   driverLicense: string;
 
+  @Column({ length: 120, nullable: true })
+  driverFlightNumer: string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
