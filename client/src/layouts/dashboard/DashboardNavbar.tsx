@@ -6,7 +6,6 @@ import { MHidden } from 'components/@material-extend';
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import LanguagePopover from './LanguagePopover';
-import ContactsPopover from './ContactsPopover';
 
 
 const DRAWER_WIDTH = 280;
@@ -31,7 +30,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   }
 }));
 
-// ----------------------------------------------------------------------
 
 type DashboardNavbarProps = {
   onOpenSidebar: VoidFunction;
@@ -52,7 +50,6 @@ export default function DashboardNavbar({ onOpenSidebar }: DashboardNavbarProps)
 
         <Stack direction="row" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
-          <ContactsPopover />
           <AccountPopover />
         </Stack>
       </ToolbarStyle>

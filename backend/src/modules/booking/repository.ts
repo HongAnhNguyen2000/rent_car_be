@@ -6,17 +6,20 @@ import { BookingAddonRepository } from '../bookingAddon/repository';
 import { InsuranceRepository } from '../insurance/repository';
 import { SpecificCarRepository } from '../specificCar/repository';
 import { CarStatusEnum } from '../../utils/const';
+import { CarRepository } from '../car/repository';
 
 @EntityRepository(Booking)
 export class BookingRepository{
     private bookingRepository: Repository<Booking> = null;
     private bookingAddonRepository: BookingAddonRepository;
     private specificCarRepository: SpecificCarRepository;
+    private carRepository: CarRepository;
     constructor(
     ) {
         this.bookingRepository = dataSource.getRepository(Booking);
         this.bookingAddonRepository = new BookingAddonRepository();
         this.specificCarRepository = new SpecificCarRepository();
+        this.carRepository = new CarRepository();
     }
 
     async query(q): Promise<Booking[]> {
@@ -53,16 +56,11 @@ export class BookingRepository{
         try {
             let booking = await this.findById(id);
             if (booking) {
+                const specificCar = await this.specificCarRepository.getById(booking.specificCar.id);
                 const bookingAddons = await this.bookingAddonRepository.getByBookingId(id);
                 const addonPromises = bookingAddons.map((item) => item.addon);
-                Promise.all(addonPromises)
-                    .then((addons) => {
-                        const result = {...booking, addons: addons};
-                        return result;
-                    })
-                    .catch((error) => {
-                        throw error;
-                    });
+                const addons = await Promise.all(addonPromises);
+                return {...booking, specificCar: specificCar, addons: addons};
             };
             return booking;
         } catch (error) {
@@ -74,16 +72,12 @@ export class BookingRepository{
         try {
             let booking = await this.findByIdAndCustomerId(id, customerId);
             if (booking) {
+                const specificCar = await this.specificCarRepository.getById(booking.specificCar.id);
                 const bookingAddons = await this.bookingAddonRepository.getByBookingId(id);
                 const addonPromises = bookingAddons.map((item) => item.addon);
-                Promise.all(addonPromises)
-                    .then((addons) => {
-                        return {...booking, addons: addons};
-                    })
-                    .catch((error) => {
-                        throw error;
-                    });
-                };
+                const addons = await Promise.all(addonPromises);
+                return {...booking, specificCar: specificCar, addons: addons};
+            };
             return booking;
         } catch (error) {
             throw error.message;
@@ -97,14 +91,20 @@ export class BookingRepository{
                 relations: ['insurance', 'specificCar']
             });
             const bookingPromises = bookings.map((booking) => this.getById(booking.id));
-            Promise.all(bookingPromises)
-                .then((data) => {
-                    return data;
-                })
-                .catch((error) => {
-                    throw error;
-                });
-            return bookings;
+            return await Promise.all(bookingPromises);
+        } catch (error) {
+            throw error.message;
+        }
+    }
+
+    async getAllForAdmin(): Promise<any[]> {
+        try {
+            const bookings = await this.query({ 
+                relations: ['insurance', 'specificCar']
+            });
+            const bookingPromises = bookings.map((booking) => this.getById(booking.id));
+            const result = await Promise.all(bookingPromises);
+            return result;
         } catch (error) {
             throw error.message;
         }

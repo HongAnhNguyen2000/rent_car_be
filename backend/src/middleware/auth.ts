@@ -38,7 +38,7 @@ exports.isAuthenticated = async(req, res, next) => {
     await checkAuth(req, res, next);
     next();
   } catch (error) {
-    return res.json({ error: error });
+    return res.status(401).json({ error: error });
   }
 }
 
@@ -51,7 +51,7 @@ exports.isCustomer = async(req, res, next) => {
     }
     next();
   } catch (error) {
-    return res.json({ error: error });
+    return res.status(401).json({ error: error });
   }
 }
 
@@ -64,6 +64,6 @@ exports.isStaff = async(req, res, next) => {
     }
     next();
   } catch (error) {
-    return res.json({ error: error });
+    return res.status(401).json({ error: error });
   }
 }

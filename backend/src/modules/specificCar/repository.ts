@@ -27,6 +27,17 @@ export class SpecificCarRepository{
     }
   }
 
+  async getById(id): Promise<SpecificCar> {
+    try {
+      return await this.specificCarRepository.findOne({ 
+        where: { id },
+        relations: ["car"]
+      });
+    } catch (error) {
+      throw error.message;
+    }
+  }
+
   async findByCarId(carId): Promise<SpecificCar[]> {
     try {
       const validStatus = [CarStatusEnum.Available, CarStatusEnum.Renting];

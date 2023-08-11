@@ -26,17 +26,9 @@ export default function GeneralApp() {
   const { user } = useAuth();
 
   return (
-    <Page title="Dashboard: App | Minimal-UI">
+    <Page title="Dashboard | Evs Rental">
       <Container maxWidth="xl">
         <Grid container spacing={3}>
-          <Grid item xs={12} md={8}>
-            <AppWelcome displayName={user?.displayName} />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <AppFeatured />
-          </Grid>
-
           <Grid item xs={12} md={4}>
             <AppTotalActiveUsers />
           </Grid>

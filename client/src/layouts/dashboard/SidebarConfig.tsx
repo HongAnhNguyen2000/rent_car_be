@@ -10,6 +10,11 @@ const getIcon = (name: string) => (
 const ICONS = {
   user: getIcon('ic_user'),
   dashboard: getIcon('ic_dashboard'),
+  car: getIcon('ic_dashboard'),
+  booking: getIcon('ic_dashboard'),
+  contract: getIcon('ic_dashboard'),
+  insurance: getIcon('ic_dashboard'),
+  addon: getIcon('ic_dashboard'),
 };
 
 const sidebarConfig = [
@@ -42,14 +47,57 @@ const sidebarConfig = [
           { title: 'account', path: PATH_DASHBOARD.user.account }
         ]
       },
+      // MANAGEMENT : CAR
+      {
+        title: 'car',
+        path: PATH_DASHBOARD.car.root,
+        icon: ICONS.car,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.car.list },
+          { title: 'create', path: PATH_DASHBOARD.car.new },
+        ]
+      },
+      // MANAGEMENT : Booking
+      {
+        title: 'booking',
+        path: PATH_DASHBOARD.booking.root,
+        icon: ICONS.booking,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.booking.list },
+        ]
+      },
+      // MANAGEMENT : Contract
+      {
+        title: 'contract',
+        path: PATH_DASHBOARD.contract.root,
+        icon: ICONS.contract,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.contract.list },
+          { title: 'create', path: PATH_DASHBOARD.contract.new },
+        ]
+      },
+      // MANAGEMENT : Insurance
+      {
+        title: 'insurance',
+        path: PATH_DASHBOARD.insurance.root,
+        icon: ICONS.insurance,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.insurance.list },
+          { title: 'create', path: PATH_DASHBOARD.insurance.new },
+        ]
+      },
+      // MANAGEMENT : Addon
+      {
+        title: 'addon',
+        path: PATH_DASHBOARD.addon.root,
+        icon: ICONS.addon,
+        children: [
+          { title: 'list', path: PATH_DASHBOARD.addon.list },
+          { title: 'create', path: PATH_DASHBOARD.addon.new },
+        ]
+      },
     ]
   },
-
-  // APP
-  // ----------------------------------------------------------------------
-  {
-    subheader: 'app',
-  }
 ];
 
 export default sidebarConfig;
