@@ -19,7 +19,8 @@ export default defineConfig({
         components: path.resolve(__dirname, "./src/components"),
         utils: path.resolve(__dirname, "./src/utils"),
         consts: path.resolve(__dirname, "./src/consts"),
-        types: path.resolve(__dirname, "./src/@types")
+        types: path.resolve(__dirname, "./src/@types"),
+        _redux: path.resolve(__dirname, "./src/redux")
     },
   },
   server: {

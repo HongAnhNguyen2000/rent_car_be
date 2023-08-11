@@ -41,6 +41,7 @@ export default function Router() {
   return useRoutes([
     {
       path: 'auth',
+      element: <MainLayout />,
       children: [
         {
           path: 'login',
@@ -63,8 +64,52 @@ export default function Router() {
         </AuthGuard>
       ),
       children: [
-        { path: '', element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <GeneralApp /> },
+        { path: '', element: <GeneralApp /> },
+        {
+          path: 'car',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/car/list" replace /> },
+            // { path: 'list', element: <Navigate to="/dashboard/car" replace /> },
+            { path: 'list', element: <CarList /> },
+            { path: 'new', element: <CarCreate /> },
+            { path: 'detail/:id', element: <CarDetail /> },
+          ]
+        },
+        {
+          path: 'booking',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/booking/list" replace /> },
+            { path: 'list', element: <BookingList /> },
+            { path: 'detail/:id', element: <CarDetail /> },
+          ]
+        },
+        {
+          path: 'contract',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/contract/list" replace /> },
+            { path: 'list', element: <CarList /> },
+            { path: 'new', element: <CarCreate /> },
+            { path: 'detail/:id', element: <CarDetail /> },
+          ]
+        },
+        {
+          path: 'insurance',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/insurance/list" replace /> },
+            { path: 'list', element: <CarList /> },
+            { path: 'new', element: <CarCreate /> },
+            { path: 'detail/:id', element: <CarDetail /> },
+          ]
+        },
+        {
+          path: 'addon',
+          children: [
+            { path: '', element: <Navigate to="/dashboard/addon/list" replace /> },
+            { path: 'list', element: <CarList /> },
+            { path: 'new', element: <CarCreate /> },
+            { path: 'detail/:id', element: <CarDetail /> },
+          ]
+        },
       ]
     },
 
@@ -81,11 +126,13 @@ export default function Router() {
       path: '/',
       element: <MainLayout />,
       children: [
-        { path: '', element: 
-          <AuthGuard>
-            <DashboardLayout />
-          </AuthGuard>
-        }
+        // { path: '', element: 
+        //   <AuthGuard>
+        //     <DashboardLayout />
+        //   </AuthGuard>
+        // },
+        { path: '', element: <Navigate to="/dashboard" replace /> },
+        { path: '/', element: <Navigate to="/dashboard" replace /> },
       ]
     },
     // { path: '*', element: <Navigate to="/404" replace /> }
@@ -100,3 +147,7 @@ const Login = Loadable(lazy(() => import('pages/authentication/Login')));
 const LandingPage = Loadable(lazy(() => import('pages/common/LandingPage')));
 // Dashboard
 const GeneralApp = Loadable(lazy(() => import('pages/dashboard/GeneralApp')));
+const CarList = Loadable(lazy(() => import('pages/dashboard/car/CarList')));
+const CarCreate = Loadable(lazy(() => import('pages/dashboard/car/CarCreate')));
+const CarDetail = Loadable(lazy(() => import('pages/dashboard/car/CarDetail')));
+const BookingList = Loadable(lazy(() => import('pages/dashboard/booking/BookingList')));

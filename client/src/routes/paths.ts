@@ -22,7 +22,7 @@ export const PATH_PAGE = {
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
-    app: path(ROOTS_DASHBOARD, '/app')
+    app: path(ROOTS_DASHBOARD, '/')
   },
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
@@ -31,6 +31,30 @@ export const PATH_DASHBOARD = {
     list: path(ROOTS_DASHBOARD, '/user/list'),
     newUser: path(ROOTS_DASHBOARD, '/user/new'),
     account: path(ROOTS_DASHBOARD, '/user/account')
+  },
+  car: {
+    root: path(ROOTS_DASHBOARD, '/car'),
+    list: path(ROOTS_DASHBOARD, '/car/list'),
+    new: path(ROOTS_DASHBOARD, '/car/new'),
+  },
+  booking: {
+    root: path(ROOTS_DASHBOARD, '/booking'),
+    list: path(ROOTS_DASHBOARD, '/booking/list'),
+  },
+  contract: {
+    root: path(ROOTS_DASHBOARD, '/contract'),
+    list: path(ROOTS_DASHBOARD, '/contract/list'),
+    new: path(ROOTS_DASHBOARD, '/contract/new'),
+  },
+  addon: {
+    root: path(ROOTS_DASHBOARD, '/addon'),
+    list: path(ROOTS_DASHBOARD, '/addon/list'),
+    new: path(ROOTS_DASHBOARD, '/addon/new'),
+  },
+  insurance: {
+    root: path(ROOTS_DASHBOARD, '/insurance'),
+    list: path(ROOTS_DASHBOARD, '/insurance/list'),
+    new: path(ROOTS_DASHBOARD, '/insurance/new'),
   },
 };
 

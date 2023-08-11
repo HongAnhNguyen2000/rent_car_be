@@ -44,7 +44,6 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 
 export default function LoadingScreen({ ...other }) {
-  console.log("LoadingScreen");
   nprogressStyle();
 
   useMemo(() => {

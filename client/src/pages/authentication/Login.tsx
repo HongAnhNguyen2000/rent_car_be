@@ -3,18 +3,13 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { Box, Card, Stack, Link, Alert, Tooltip, Container, Typography } from '@mui/material';
-// routes
 import { PATH_AUTH } from 'routes/paths';
-// hooks
 import useAuth from 'hooks/useAuth';
-// layouts
 import AuthLayout from 'layouts/AuthLayout';
-// components
 import Page from 'components/common/Page';
 import { MHidden } from 'components/@material-extend';
 import { LoginForm } from 'components/authentication/login';
 
-// ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
@@ -41,13 +36,12 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
-// ----------------------------------------------------------------------
 
 export default function Login() {
   const { method } = useAuth();
 
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title="Login | Evs Rental Cms">
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
@@ -62,9 +56,9 @@ export default function Login() {
           <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Sign in to Minimal
+                Sign in to Evs Rental
               </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Enter your account below.</Typography>
             </Box>
 
             <Tooltip title={capitalCase(method)}>
@@ -76,10 +70,10 @@ export default function Login() {
             </Tooltip>
           </Stack>
 
-          <Alert severity="info" sx={{ mb: 3 }}>
+          {/* <Alert severity="info" sx={{ mb: 3 }}>
             Use email : <strong>demo@minimals.cc</strong> / password :
             <strong>&nbsp;demo1234</strong>
-          </Alert>
+          </Alert> */}
 
           <LoginForm />
 
