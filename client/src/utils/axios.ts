@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BASE_URL } from 'src/config';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://rent-car.huutuananh.com//api/v1'
+    baseURL: 'https://rent-car.huutuananh.com/api/v1'
     // baseURL: 'https://rent.car.test/api/v1'
 });
 
